@@ -34,6 +34,7 @@ public class Movie {
     )
     private Set<Genre> genres;
 
+    @ManyToMany
     @JoinTable(
             name = "movies_keywords",
             joinColumns = @JoinColumn(name = "movie_id"),
