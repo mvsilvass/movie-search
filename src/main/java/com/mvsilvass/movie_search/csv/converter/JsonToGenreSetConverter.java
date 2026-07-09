@@ -8,7 +8,7 @@ import tools.jackson.databind.ObjectMapper;
 import java.util.Collections;
 import java.util.Set;
 
-public class GenreCsvConverter extends AbstractBeanField<Set<GenreCsv>, String> {
+public class JsonToGenreSetConverter extends AbstractBeanField<Set<GenreCsv>, String> {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
