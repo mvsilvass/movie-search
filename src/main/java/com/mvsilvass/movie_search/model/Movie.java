@@ -9,11 +9,12 @@ import java.util.Set;
 @Entity
 @Setter
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Movie {
 
-    @Id()
+    @Id
     @Column(name = "movie_id")
     @Setter(AccessLevel.NONE)
     private Long movieId;
