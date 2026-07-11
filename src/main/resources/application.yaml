@@ -1,3 +1,6 @@
+app:
+  movie-csv-path: src/main/resources/database_filmes/tmdb_5000_movies.csv
+
 spring:
   application:
     name: movie-search
@@ -9,6 +12,6 @@ spring:
     password: postgres
 
   jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
