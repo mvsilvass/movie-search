@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Setter
@@ -12,6 +12,7 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "movies")
 public class Movie {
 
     @Id
@@ -20,27 +21,30 @@ public class Movie {
     private Long movieId;
 
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String overview;
+
     private Double popularity;
     private LocalDate releaseDate;
-    private Integer runtime;
+    private Double runtime;
     private Double voteAverage;
     private Integer voteCount;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "movies_genres",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
-    private Set<Genre> genres;
+    private List<Genre> genres;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "movies_keywords",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "keyword_id")
     )
-    private Set<Keyword> keywords;
+    private List<Keyword> keywords;
 
 }
