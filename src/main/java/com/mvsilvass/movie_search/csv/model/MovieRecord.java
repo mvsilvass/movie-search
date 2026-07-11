@@ -1,20 +1,18 @@
-package com.mvsilvass.movie_search.csv;
+package com.mvsilvass.movie_search.csv.model;
 
-import com.mvsilvass.movie_search.csv.converter.GenreCsvConverter;
+import com.mvsilvass.movie_search.csv.converter.GenreRecordConverter;
+import com.mvsilvass.movie_search.csv.converter.KeywordRecordConverter;
 
-import com.mvsilvass.movie_search.csv.converter.JsonToGenreSetConverter;
-import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvCustomBindByName;
+import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvDate;
-
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Getter
-public class MovieCsv {
-
+public class MovieRecord{
     @CsvBindByName(column = "id")
     private Long movieId;
 
@@ -40,10 +38,9 @@ public class MovieCsv {
     @CsvBindByName(column = "vote_count")
     private Integer voteCount;
 
-    @CsvCustomBindByName(column = "genres", converter = JsonToGenreSetConverter.class)
-    private Set<GenreCsv> genres;
+    @CsvCustomBindByName(column = "genres", converter = GenreRecordConverter.class)
+    private List<GenreRecord> genres;
 
-    @CsvBindByName(column = "keywords")
-    private Set<KeywordCsv> keywords;
-
+    @CsvCustomBindByName(column = "keywords", converter = KeywordRecordConverter.class)
+    private List<KeywordRecord> keywords;
 }
