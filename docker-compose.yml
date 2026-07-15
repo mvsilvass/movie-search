@@ -1,0 +1,33 @@
+services:
+  database:
+    image: pgvector/pgvector:pg18
+    networks:
+      - backend-network
+    restart: always
+    environment:
+      POSTGRES_DB: movie_search
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/li/postgresql/database
+    ports:
+      - 5432:5432
+
+  ollama:
+    image: ollama/ollama
+    restart: always
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - 11434:11434
+    # docker exec -it movie-search-ollama-1 ollama pull nomic-embed-text
+networks:
+  backend-network:
+    driver: bridge
+
+volumes: 
+  postgres_data:
+  ollama_data:
+
+  
+    
