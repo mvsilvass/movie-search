@@ -26,6 +26,12 @@ spring:
           order_inserts: true
         generate_statistics: true
 
+  batch:
+    jdbc:
+      initialize-schema: always
+    job:
+      enable: false
+
   ai:
     vectorstore:
       pgvector:
