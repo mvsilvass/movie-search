@@ -30,13 +30,15 @@ spring:
     jdbc:
       initialize-schema: always
     job:
-      enable: false
+      enabled: false
 
   ai:
     vectorstore:
       pgvector:
-        index-type: HNSW
+        batching-strategy: BATCH_PER_DOCUMENT
         distance-type: COSINE_DISTANCE
+        initialize-schema: true
+        index-type: HNSW
         dimensions: 768
 
     ollama:
