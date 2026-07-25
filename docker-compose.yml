@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
-      - postgres_data:/var/li/postgresql/database
+      - postgres_data:/var/lib/postgresql/database
     ports:
       - 5432:5432
 
