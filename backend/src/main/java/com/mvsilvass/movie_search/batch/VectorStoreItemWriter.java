@@ -21,7 +21,7 @@ public class VectorStoreItemWriter implements ItemWriter<Movie> {
     private final VectorStore vectorStore;
 
     @Override
-    public void write(Chunk<? extends Movie> chunk) throws Exception {
+    public void write(Chunk<? extends Movie> chunk)  {
         List<Document> documents = new ArrayList<>();
 
         for (Movie movie : chunk) {
