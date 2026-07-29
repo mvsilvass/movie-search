@@ -1,21 +1,48 @@
 package com.mvsilvass.movie_search.model;
 
-import lombok.Builder;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 @Builder
-public record Movie(
-        UUID id,
-        String title,
-        String overview,
-        Double popularity,
-        LocalDate releaseDate,
-        Double runtime,
-        Double voteAverage,
-        Integer voteCount,
-        List<Genre> genres,
-        List<Keyword> keywords
-) {}
+@Entity
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "movies")
+public class Movie {
+
+    @Id
+    @Column(name = "movie_id")
+    @Setter(AccessLevel.NONE)
+    private UUID movieId;
+
+    private String title;
+    private String overview;
+    private Double popularity;
+    private LocalDate releaseDate;
+    private Double runtime;
+    private Double voteAverage;
+    private Integer voteCount;
+
+    @ManyToMany
+    @JoinTable(
+            name = "movies_genres",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private List<Genre> genres;
+
+    @ManyToMany
+    @JoinTable(
+            name = "movies_keywords",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "keyword_id")
+    )
+    private List<Keyword> keywords;
+
+}

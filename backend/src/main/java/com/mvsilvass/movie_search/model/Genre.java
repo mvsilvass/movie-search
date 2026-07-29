@@ -1,6 +1,22 @@
 package com.mvsilvass.movie_search.model;
 
-public record Genre(
-        Long id,
-        String name
-) {}
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import lombok.*;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Genre {
+
+    @Id
+    @Column(name = "genre_id")
+    @Setter(AccessLevel.NONE)
+    private Long genreId;
+
+    private String name;
+
+}
