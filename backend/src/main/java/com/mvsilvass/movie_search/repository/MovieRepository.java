@@ -1,4 +1,7 @@
 package com.mvsilvass.movie_search.repository;
 
-public class MovieRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.mvsilvass.movie_search.model.Movie;
+
+public interface MovieRepository extends JpaRepository<Movie, Long> {
 }
