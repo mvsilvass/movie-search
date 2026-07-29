@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin/")
+@RequestMapping("/api/admin")
 public class MovieImportController {
 
     private final MovieImportService movieImportService;
