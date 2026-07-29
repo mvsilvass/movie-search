@@ -29,7 +29,7 @@ public class Movie {
     private Double voteAverage;
     private Integer voteCount;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "movies_genres",
             joinColumns = @JoinColumn(name = "movie_id"),
@@ -37,7 +37,7 @@ public class Movie {
     )
     private List<Genre> genres;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "movies_keywords",
             joinColumns = @JoinColumn(name = "movie_id"),
