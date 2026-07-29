@@ -15,7 +15,7 @@ public class MovieImportController {
 
     private final MovieImportService movieImportService;
 
-    @PostMapping("/import-movies")
+    @PostMapping("/imports/movies")
     public ResponseEntity<String> importMovies() {
         try {
             movieImportService.execute();
