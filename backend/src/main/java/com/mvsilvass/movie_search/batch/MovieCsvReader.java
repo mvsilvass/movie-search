@@ -1,4 +1,4 @@
-package com.mvsilvass.movie_search.config;
+package com.mvsilvass.movie_search.batch;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +16,7 @@ import org.springframework.core.io.FileSystemResource;
 import com.mvsilvass.movie_search.dto.csv.MovieCsvRecord;
 
 @Configuration
-public class MovieCsvReaderConfig {
+public class MovieCsvReader {
 
     @Value("${app.movie-csv-path}")
     private String filePath;

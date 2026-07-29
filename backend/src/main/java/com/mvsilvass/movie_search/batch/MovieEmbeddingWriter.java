@@ -16,12 +16,12 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class VectorStoreItemWriter implements ItemWriter<Movie> {
+public class MovieEmbeddingWriter implements ItemWriter<Movie> {
 
     private final VectorStore vectorStore;
 
     @Override
-    public void write(Chunk<? extends Movie> chunk)  {
+    public void write(Chunk<? extends Movie> chunk) {
         List<Document> documents = new ArrayList<>();
 
         for (Movie movie : chunk) {
