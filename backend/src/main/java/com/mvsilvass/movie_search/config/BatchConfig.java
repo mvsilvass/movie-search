@@ -1,12 +1,13 @@
 package com.mvsilvass.movie_search.config;
 
+
 import org.springframework.batch.infrastructure.item.ItemReader;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import lombok.RequiredArgsConstructor;
 
+import com.mvsilvass.movie_search.batch.MovieEmbeddingWriter;
 import com.mvsilvass.movie_search.batch.MovieProcessor;
-import com.mvsilvass.movie_search.batch.VectorStoreItemWriter;
 import com.mvsilvass.movie_search.dto.csv.MovieCsvRecord;
 
 import org.springframework.ai.vectorstore.VectorStore;
@@ -36,7 +37,7 @@ public class BatchConfig {
 
     @Bean
     public ItemWriter<Movie> itemWriter(){
-        return new VectorStoreItemWriter(vectorStore);
+        return new MovieEmbeddingWriter(vectorStore);
     }
 
     @Bean
