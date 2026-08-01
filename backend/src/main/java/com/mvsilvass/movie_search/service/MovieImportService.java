@@ -1,5 +1,6 @@
 package com.mvsilvass.movie_search.service;
 
+import org.springframework.batch.core.job.JobExecution;
 import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 
@@ -15,11 +16,11 @@ public class MovieImportService {
     private final JobOperator jobOperator;
     private final Job movieImportJob;
 
-    public void execute() throws Exception {
+    public JobExecution execute() throws Exception {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("startAt", System.currentTimeMillis())
                 .toJobParameters();
 
-        jobOperator.start(movieImportJob, jobParameters);
+        return jobOperator.start(movieImportJob, jobParameters);
     }
 }
