@@ -1,5 +1,6 @@
 package com.mvsilvass.movie_search.batch;
 
+import com.mvsilvass.movie_search.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MovieEmbeddingWriter implements ItemWriter<Movie> {
 
+    private final MovieRepository movieRepository;
     private final VectorStore vectorStore;
 
     @Override
@@ -26,16 +28,18 @@ public class MovieEmbeddingWriter implements ItemWriter<Movie> {
 
         for (Movie movie : chunk) {
 
+            movieRepository.save(movie);
+
             Map<String, Object> metadata = Map.of(
-                    "movieId", movie.id(),
-                    "title", movie.title(),
-                    "genres", movie.genres(),
-                    "keywords", movie.keywords()
+                    "movieId", movie.getMovieId(),
+                    "title", movie.getTitle(),
+                    "genres", movie.getGenres(),
+                    "keywords", movie.getKeywords()
             );
 
             Document document = new Document(
-                    String.valueOf(movie.id()),
-                    movie.overview(),
+                    String.valueOf(movie.getMovieId()),
+                    movie.getOverview(),
                     metadata
             );
 

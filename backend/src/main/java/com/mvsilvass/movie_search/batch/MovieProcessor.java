@@ -1,5 +1,6 @@
 package com.mvsilvass.movie_search.batch;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 
@@ -11,8 +12,9 @@ import tools.jackson.databind.ObjectMapper;
 import tools.jackson.core.type.TypeReference;
 
 import java.time.format.DateTimeParseException;
-import java.time.LocalDate;
+
 import java.util.Collections;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,24 +25,24 @@ public class MovieProcessor implements ItemProcessor<MovieCsvRecord, Movie> {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public Movie process(MovieCsvRecord csvRecord) throws Exception {
+    public Movie process(MovieCsvRecord csvRecord) {
 
         List<Genre> genres = parseJsonToList(csvRecord.getGenres(), new TypeReference<List<Genre>>() {});
         List<Keyword> keywords = parseJsonToList(csvRecord.getKeywords(), new TypeReference<List<Keyword>>() {});
+        LocalDate releaseDate = parseLocalDate(csvRecord.getReleaseDate());
 
-
-        return new Movie(
-                UUID.randomUUID(),
-                csvRecord.getTitle(),
-                csvRecord.getOverview(),
-                csvRecord.getPopularity(),
-                parseLocalDate(csvRecord.getReleaseDate()),
-                csvRecord.getRuntime(),
-                csvRecord.getVoteAverage(),
-                csvRecord.getVoteCount(),
-                genres,
-                keywords
-        );
+        return Movie.builder()
+                .movieId(UUID.randomUUID())
+                .title(csvRecord.getTitle())
+                .overview(csvRecord.getOverview())
+                .popularity(csvRecord.getPopularity())
+                .voteAverage(csvRecord.getVoteAverage())
+                .voteCount(csvRecord.getVoteCount())
+                .runtime(csvRecord.getRuntime())
+                .releaseDate(releaseDate)
+                .keywords(keywords)
+                .genres(genres)
+        .build();
     }
 
     private <T> List<T> parseJsonToList(String value, TypeReference<List<T>> typeReference) {
@@ -51,7 +53,7 @@ public class MovieProcessor implements ItemProcessor<MovieCsvRecord, Movie> {
         return objectMapper.readValue(value, typeReference);
     }
 
-    public static LocalDate parseLocalDate(String date) {
+    private LocalDate parseLocalDate(String date) {
         if (date == null || date.isBlank())
             return null;
 

@@ -1,6 +1,6 @@
 package com.mvsilvass.movie_search.config;
 
-
+import com.mvsilvass.movie_search.repository.MovieRepository;
 import org.springframework.batch.infrastructure.item.ItemReader;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
@@ -28,16 +28,15 @@ import com.mvsilvass.movie_search.model.Movie;
 @RequiredArgsConstructor
 public class BatchConfig {
 
-    private final VectorStore vectorStore;
-
     @Bean
     public MovieProcessor itemProcessor(){
         return new MovieProcessor();
     }
 
     @Bean
-    public ItemWriter<Movie> itemWriter(){
-        return new MovieEmbeddingWriter(vectorStore);
+    public ItemWriter<Movie> itemWriter(MovieRepository movieRepository,
+                                        VectorStore vectorStore){
+        return new MovieEmbeddingWriter(movieRepository, vectorStore);
     }
 
     @Bean
@@ -50,13 +49,14 @@ public class BatchConfig {
     @Bean
     public Step importMoviesStep(JobRepository jobRepository,
                                  ItemReader<MovieCsvRecord> itemReader,
+                                 ItemWriter<Movie> itemWriter,
                                  PlatformTransactionManager transactionManager) {
         return new StepBuilder("importMoviesStep", jobRepository)
                 .<MovieCsvRecord, Movie>chunk(1000)
                 .transactionManager(transactionManager)
                 .reader(itemReader)
                 .processor(itemProcessor())
-                .writer(itemWriter())
+                .writer(itemWriter)
                 .taskExecutor(taskExecutor())
         .build();
     }
