@@ -1,5 +1,6 @@
 package com.mvsilvass.movie_search.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,12 +18,16 @@ import java.util.UUID;
 public class Movie {
 
     @Id
+    @JsonIgnore
     @Column(name = "movie_id")
     @Setter(AccessLevel.NONE)
     private UUID movieId;
 
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String overview;
+
     private Double popularity;
     private LocalDate releaseDate;
     private Double runtime;

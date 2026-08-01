@@ -1,8 +1,7 @@
 package com.mvsilvass.movie_search.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -10,9 +9,11 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "genres")
 public class Genre {
 
     @Id
+    @JsonProperty("id")
     @Column(name = "genre_id")
     @Setter(AccessLevel.NONE)
     private Long genreId;
