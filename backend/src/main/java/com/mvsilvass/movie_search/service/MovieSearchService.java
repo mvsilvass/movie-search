@@ -17,6 +17,7 @@ public class MovieSearchService {
 
     private final MovieRepository movieRepository;
     private final VectorStore vectorStore;
+    private final TmdbService tmdbService;
 
     public List<Movie> searchBySimilarity(String query) {
         List<Document> documents = vectorStore.similaritySearch(query);
@@ -25,6 +26,12 @@ public class MovieSearchService {
                 .map(document -> UUID.fromString(document.getId()))
         .toList();
 
-        return movieRepository.findAllById(movieIds);
+        List<Movie> movies = movieRepository.findAllById(movieIds);
+
+        return movies.stream()
+                .map(tmdbService::fetchPosterIfMissing)
+        .toList();
+
     }
+
 }

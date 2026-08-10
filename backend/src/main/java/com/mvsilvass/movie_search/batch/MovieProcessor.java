@@ -33,6 +33,7 @@ public class MovieProcessor implements ItemProcessor<MovieCsvRecord, Movie> {
 
         return Movie.builder()
                 .movieId(UUID.randomUUID())
+                .tmdbId(Long.parseLong(csvRecord.getId()))
                 .title(csvRecord.getTitle())
                 .overview(csvRecord.getOverview())
                 .popularity(csvRecord.getPopularity())

@@ -23,7 +23,9 @@ public class Movie {
     @Setter(AccessLevel.NONE)
     private UUID movieId;
 
+    private Long tmdbId;
     private String title;
+    private String posterPath;
 
     @Column(columnDefinition = "TEXT")
     private String overview;
