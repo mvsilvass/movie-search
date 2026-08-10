@@ -48,6 +48,8 @@ spring:
 
 app:
   movie-csv-path: src/main/resources/database_filmes/tmdb_5000_movies.csv
+  cors:
+    allowed-origins: ${FRONTEND_URL}
 
 tmdb:
   api:
