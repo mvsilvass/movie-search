@@ -31,7 +31,6 @@ public class VectorStoreConfig {
                 .initializeSchema(true)
                 .schemaName("public")
                 .idType(PgVectorStore.PgIdType.INTEGER)
-                .vectorTableName("moviesvectorstore")
         .build();
     }
 
