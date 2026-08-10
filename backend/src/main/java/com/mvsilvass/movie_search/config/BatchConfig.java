@@ -52,7 +52,7 @@ public class BatchConfig {
                                  ItemWriter<Movie> itemWriter,
                                  PlatformTransactionManager transactionManager) {
         return new StepBuilder("importMoviesStep", jobRepository)
-                .<MovieCsvRecord, Movie>chunk(1000)
+                .<MovieCsvRecord, Movie>chunk(250)
                 .transactionManager(transactionManager)
                 .reader(itemReader)
                 .processor(itemProcessor())
@@ -65,7 +65,7 @@ public class BatchConfig {
     public Job importMoviesJob(JobRepository jobRepository,
                                Step importMoviesStep) {
         return new JobBuilder(jobRepository)
-                .start(importMoviesStep)
+                .start(importMoviesStep)    
         .build();
     }
 
