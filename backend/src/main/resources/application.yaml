@@ -1,15 +1,14 @@
-app:
-  movie-csv-path: src/main/resources/database_filmes/tmdb_5000_movies.csv
-
 spring:
   application:
     name: movie-search
+  config:
+    import: "optional:file:../.env[.properties]"
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/movie_search
-    username: postgres
-    password: postgres
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
 
   sql:
     init:
@@ -46,3 +45,14 @@ spring:
       embedding:
         options:
           model: nomic-embed-text
+
+app:
+  movie-csv-path: src/main/resources/database_filmes/tmdb_5000_movies.csv
+
+tmdb:
+  api:
+    key: ${TMDB_API_KEY}
+    url: ${TMDB_API_URL}
+  image:
+    base-url: ${TMDB_IMAGE_BASE_URL}
+    poster-size: ${TMDB_IMAGE_POSTER_SIZE}
