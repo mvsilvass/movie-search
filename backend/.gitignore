@@ -34,4 +34,4 @@ build/
 .vscode/
 
 # Arquivos de dados
-database_filmes
+dataset
