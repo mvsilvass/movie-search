@@ -1,3 +1,6 @@
+server:
+  port: ${SERVER_PORT}
+
 spring:
   application:
     name: movie-search
@@ -36,18 +39,18 @@ spring:
       pgvector:
         batching-strategy: BATCH_PER_DOCUMENT
         distance-type: COSINE_DISTANCE
-        initialize-schema: true
+        initialize-schema : true
         index-type: HNSW
         dimensions: 768
 
     ollama:
-      base-url: http://localhost:11434
+      base-url: ${OLLAMA_BASE_URL}
       embedding:
         options:
-          model: nomic-embed-text
+          model: ${OLLAMA_EMBEDDING_MODEL}
 
 app:
-  movie-csv-path: src/main/resources/database_filmes/tmdb_5000_movies.csv
+  movie-csv-path: ${MOVIE_CSV_PATH}
   cors:
     allowed-origins: ${FRONTEND_URL}
 
