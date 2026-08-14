@@ -1,6 +1,5 @@
 package com.mvsilvass.movie_search.batch;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 
@@ -27,8 +26,8 @@ public class MovieProcessor implements ItemProcessor<MovieCsvRecord, Movie> {
     @Override
     public Movie process(MovieCsvRecord csvRecord) {
 
-        List<Genre> genres = parseJsonToList(csvRecord.getGenres(), new TypeReference<List<Genre>>() {});
-        List<Keyword> keywords = parseJsonToList(csvRecord.getKeywords(), new TypeReference<List<Keyword>>() {});
+        List<Genre> genres = parseJsonToList(csvRecord.getGenres(), new TypeReference<>(){});
+        List<Keyword> keywords = parseJsonToList(csvRecord.getKeywords(), new TypeReference<>(){});
         LocalDate releaseDate = parseLocalDate(csvRecord.getReleaseDate());
 
         return Movie.builder()
