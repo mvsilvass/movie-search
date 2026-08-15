@@ -1,4 +1,4 @@
-package com.mvsilvass.movie_search.dto.csv;
+package com.mvsilvass.movie_search.batch.dto;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovieCsvRecord {
+public class MovieCsv {
 
     private Long budget;
     private String genres;

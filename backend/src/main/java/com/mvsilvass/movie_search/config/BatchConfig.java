@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 
 import com.mvsilvass.movie_search.batch.MovieEmbeddingWriter;
 import com.mvsilvass.movie_search.batch.MovieProcessor;
-import com.mvsilvass.movie_search.dto.csv.MovieCsvRecord;
+import com.mvsilvass.movie_search.batch.dto.MovieCsv;
 
 import org.springframework.ai.vectorstore.VectorStore;
 
@@ -48,11 +48,11 @@ public class BatchConfig {
 
     @Bean
     public Step importMoviesStep(JobRepository jobRepository,
-                                 ItemReader<MovieCsvRecord> itemReader,
+                                 ItemReader<MovieCsv> itemReader,
                                  ItemWriter<Movie> itemWriter,
                                  PlatformTransactionManager transactionManager) {
         return new StepBuilder("importMoviesStep", jobRepository)
-                .<MovieCsvRecord, Movie>chunk(250)
+                .<MovieCsv, Movie>chunk(250)
                 .transactionManager(transactionManager)
                 .reader(itemReader)
                 .processor(itemProcessor())

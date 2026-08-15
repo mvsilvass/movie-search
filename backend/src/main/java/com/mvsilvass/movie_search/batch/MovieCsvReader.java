@@ -1,9 +1,5 @@
 package com.mvsilvass.movie_search.batch;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Bean;
-
 import org.springframework.batch.infrastructure.item.file.separator.DefaultRecordSeparatorPolicy;
 import org.springframework.batch.infrastructure.item.file.builder.FlatFileItemReaderBuilder;
 import org.springframework.batch.infrastructure.item.file.mapping.BeanWrapperFieldSetMapper;
@@ -13,7 +9,11 @@ import org.springframework.batch.infrastructure.item.file.FlatFileItemReader;
 import org.springframework.batch.infrastructure.item.file.LineMapper;
 import org.springframework.core.io.FileSystemResource;
 
-import com.mvsilvass.movie_search.dto.csv.MovieCsvRecord;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Bean;
+
+import com.mvsilvass.movie_search.batch.dto.MovieCsv;
 
 @Configuration
 public class MovieCsvReader {
@@ -22,26 +22,26 @@ public class MovieCsvReader {
     private String filePath;
 
     @Bean
-    public FlatFileItemReader<MovieCsvRecord> itemReader(){
-        return new FlatFileItemReaderBuilder<MovieCsvRecord>()
+    public FlatFileItemReader<MovieCsv> itemReader(){
+        return new FlatFileItemReaderBuilder<MovieCsv>()
                 .resource(new FileSystemResource(filePath))
                 .recordSeparatorPolicy(
                         new DefaultRecordSeparatorPolicy()
                 ).lineMapper(lineMapper())
                 .name("csv-movie-reader")
                 .linesToSkip(1)
-                .build();
+        .build();
     }
 
-    private LineMapper<MovieCsvRecord> lineMapper(){
-        DefaultLineMapper<MovieCsvRecord> lineMapper = new DefaultLineMapper<>();
+    private LineMapper<MovieCsv> lineMapper(){
+        DefaultLineMapper<MovieCsv> lineMapper = new DefaultLineMapper<>();
 
         DelimitedLineTokenizer lineTokenizer = delimitedLineTokenizer();
 
-        BeanWrapperFieldSetMapper<MovieCsvRecord> fieldSetMapper =
+        BeanWrapperFieldSetMapper<MovieCsv> fieldSetMapper =
                 new BeanWrapperFieldSetMapper<>();
 
-        fieldSetMapper.setTargetType(MovieCsvRecord.class);
+        fieldSetMapper.setTargetType(MovieCsv.class);
         fieldSetMapper.setDistanceLimit(0);
 
         lineMapper.setLineTokenizer(lineTokenizer);

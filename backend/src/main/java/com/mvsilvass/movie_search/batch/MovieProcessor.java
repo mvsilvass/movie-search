@@ -3,7 +3,7 @@ package com.mvsilvass.movie_search.batch;
 import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 
-import com.mvsilvass.movie_search.dto.csv.MovieCsvRecord;
+import com.mvsilvass.movie_search.batch.dto.MovieCsv;
 import com.mvsilvass.movie_search.model.*;
 
 import org.springframework.batch.infrastructure.item.ItemProcessor;
@@ -19,12 +19,12 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
-public class MovieProcessor implements ItemProcessor<MovieCsvRecord, Movie> {
+public class MovieProcessor implements ItemProcessor<MovieCsv, Movie> {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public Movie process(MovieCsvRecord csvRecord) {
+    public Movie process(MovieCsv csvRecord) {
 
         List<Genre> genres = parseJsonToList(csvRecord.getGenres(), new TypeReference<>(){});
         List<Keyword> keywords = parseJsonToList(csvRecord.getKeywords(), new TypeReference<>(){});

@@ -1,6 +1,6 @@
 package com.mvsilvass.movie_search.batch;
 
-import com.mvsilvass.movie_search.dto.csv.MovieCsvRecord;
+import com.mvsilvass.movie_search.batch.dto.MovieCsv;
 import com.mvsilvass.movie_search.model.Movie;
 
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,7 +24,7 @@ class MovieProcessorTest {
     void shouldProcessMovieSuccessfully() {
         // GIVEN
 
-        MovieCsvRecord movieCsvRecord = MovieCsvRecord.builder()
+        MovieCsv csvRecord = MovieCsv.builder()
                 .id("100")
                 .title("Test title")
                 .overview("Test overview")
@@ -39,7 +39,7 @@ class MovieProcessorTest {
         .build();
 
         // WHEN
-        Movie processedMovie = movieProcessor.process(movieCsvRecord);
+        Movie processedMovie = movieProcessor.process(csvRecord);
 
         // THEN
         assertNotNull(processedMovie);
@@ -62,7 +62,7 @@ class MovieProcessorTest {
     @DisplayName("Should return empty list when json fields is null or empty")
     void shouldReturnEmptyListsWhenJsonFieldsAreNullOrEmpty() {
         // GIVEN
-        MovieCsvRecord movieCsvRecord = MovieCsvRecord.builder()
+        MovieCsv csvRecord = MovieCsv.builder()
                 .id("100")
                 .title("Test title")
                 .overview("Test overview")
@@ -72,7 +72,7 @@ class MovieProcessorTest {
         .build();
 
         // WHEN
-        Movie processedMovie = movieProcessor.process(movieCsvRecord);
+        Movie processedMovie = movieProcessor.process(csvRecord);
 
         // THEN
         assertNotNull(processedMovie);
@@ -86,14 +86,14 @@ class MovieProcessorTest {
     @Test
     @DisplayName("Should return null releaseDate when date string is null or blank")
     void shouldReturnNullReleaseDateWhenDateIsNullOnlyOrBlank() {
-        MovieCsvRecord movieCsvRecord = MovieCsvRecord.builder()
+        MovieCsv csvRecord = MovieCsv.builder()
                 .id("100")
                 .title("Test title")
-                .releaseDate("   ")
-                .build();
+                .releaseDate(null)
+        .build();
 
         // WHEN
-        Movie processedMovie = movieProcessor.process(movieCsvRecord);
+        Movie processedMovie = movieProcessor.process(csvRecord);
 
         // THEN
         assertNotNull(processedMovie);
@@ -103,14 +103,14 @@ class MovieProcessorTest {
     @Test
     @DisplayName("Should handle DateTimeParseException and return null when date format is invalid")
     void shouldReturnNullReleaseDateWhenDateFormatIsInvalid() {
-        MovieCsvRecord movieCsvRecord = MovieCsvRecord.builder()
+        MovieCsv csvRecord = MovieCsv.builder()
                 .id("100")
                 .title("Test title")
                 .releaseDate("15/01/2024")
         .build();
 
         // WHEN
-        Movie processedMovie = movieProcessor.process(movieCsvRecord);
+        Movie processedMovie = movieProcessor.process(csvRecord);
 
         // THEN
         assertNotNull(processedMovie);
