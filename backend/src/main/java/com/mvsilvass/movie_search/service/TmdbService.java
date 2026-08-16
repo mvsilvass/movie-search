@@ -13,13 +13,13 @@ import org.springframework.stereotype.Service;
 public class TmdbService {
 
     @Value("${tmdb.api.key}")
-    private String apiKey;
+    private final String API_KEY;
 
     @Value("${tmdb.image.base-url}")
-    private String imageBaseUrl;
+    private final String IMAGE_BASE_URL;
 
     @Value("${tmdb.image.poster-size}")
-    private String posterSize;
+    private final String POSTER_SIZE;
 
     private final TmdbClient tmdbClient;
     private final MovieRepository movieRepository;
@@ -29,7 +29,7 @@ public class TmdbService {
             return movie;
 
         try {
-            TmdbPosterResponse response = tmdbClient.getMoviePosterById(movie.getTmdbId(), apiKey);
+            TmdbPosterResponse response = tmdbClient.getMoviePosterById(movie.getTmdbId(), API_KEY);
 
             if (response != null && response.posterPath() != null) {
 
@@ -37,7 +37,7 @@ public class TmdbService {
                         ? response.posterPath().substring(1)
                         : response.posterPath();
 
-                String fullPosterUrl = imageBaseUrl + posterSize + "/" + path;
+                String fullPosterUrl = IMAGE_BASE_URL + POSTER_SIZE + "/" + path;
                 movie.setPosterPath(fullPosterUrl);
 
                 return movieRepository.save(movie);
