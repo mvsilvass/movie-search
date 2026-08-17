@@ -1,0 +1,8 @@
+<input
+  id="search-input"
+  type="text"
+  [(ngModel)]="searchQuery"
+  [placeholder]="placeholder()"
+  [aria-label]="label()"
+  (keyup.enter)="onSearch()"
+/>
