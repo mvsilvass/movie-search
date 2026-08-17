@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
-import com.mvsilvass.movie_search.model.Movie;
 import com.mvsilvass.movie_search.service.MovieSearchService;
+import com.mvsilvass.movie_search.dto.response.MovieSummary;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class MovieSearchController {
     private final MovieSearchService movieSearchService;
 
     @GetMapping("/search")
-    public List<Movie> searchMovies(@RequestParam String query){
+    public List<MovieSummary> searchMovies(@RequestParam String query){
         return movieSearchService.searchBySimilarity(query);
     }
 }

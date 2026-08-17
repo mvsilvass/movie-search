@@ -1,5 +1,6 @@
 package com.mvsilvass.movie_search.service;
 
+import com.mvsilvass.movie_search.dto.response.MovieSummary;
 import com.mvsilvass.movie_search.model.Movie;
 
 import com.mvsilvass.movie_search.repository.MovieRepository;
@@ -19,7 +20,7 @@ public class MovieSearchService {
     private final VectorStore vectorStore;
     private final TmdbService tmdbService;
 
-    public List<Movie> searchBySimilarity(String query) {
+    public List<MovieSummary> searchBySimilarity(String query) {
         List<Document> documents = vectorStore.similaritySearch(query);
 
         List<UUID> movieIds = documents.stream()
@@ -30,8 +31,10 @@ public class MovieSearchService {
 
         return movies.stream()
                 .map(tmdbService::fetchPosterIfMissing)
+                .map(MovieSummary::new)
         .toList();
 
     }
+
 
 }
