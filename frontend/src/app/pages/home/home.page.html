@@ -1,0 +1,46 @@
+<div class="home-container">
+  <header class="home-header">
+    <app-search-bar
+      label="Search movies"
+      placeholder="Search for movies..."
+      (search)="onSearch($event)"
+    />
+  </header>
+
+  <main>
+    @if (movies().length > 0) {
+      <div class="movie-list">
+        @for (movie of movies(); track movie.tmdbId) {
+          <app-movie-card [movie]="movie" (clicked)="viewDetails($event)" />
+        }
+      </div>
+
+      <nav aria-label="Paginação de filmes">
+        <ul class="pagination">
+          <li>
+            <a href="#" (click)="previousPage($event)">Anterior</a>
+          </li>
+
+          <li>
+            <a>
+              {{ (currentPage() + 1).toString().padStart(2, '0') }} de
+              {{ totalPages().toString().padStart(2, '0') }}
+            </a>
+          </li>
+
+          <li>
+            <a href="#" (click)="nextPage($event)">Próxima</a>
+          </li>
+        </ul>
+      </nav>
+    } @else {
+      <div>
+        <p>Nenhum filme encontrado!</p>
+      </div>
+    }
+  </main>
+
+  <footer class="home-footer">
+    <p>&copy; 2026 Movie Search. Todos os direitos reservados.</p>
+  </footer>
+</div>
