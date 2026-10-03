@@ -1,0 +1,55 @@
+:host{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  text-decoration: none;
+  color: inherit;
+  font-family: sans-serif;
+  overflow: hidden;
+  flex-shrink: 1;
+  flex-grow: 1;
+}
+
+.card{
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+  
+}
+
+.poster-wrapper {
+  background-color: white;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.poster-wrapper img {
+  width: 100px;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+}
+
+.card-info {
+  padding-top: 6px;
+  padding-bottom: 2px;
+}
+
+.title {
+  margin: 0;
+  font-size: 0.85em;
+  text-align: center;
+  font-weight: 700;
+  line-height: 1.2;
+  color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

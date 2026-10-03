@@ -1,0 +1,9 @@
+<a class="card" (click)="onClick()">
+  <div class="poster-wrapper">
+    <img [src]="movie().posterPath" [alt]="movie().title" loading="lazy" />
+  </div>
+
+  <div class="card-info">
+    <h3 class="title" [title]="movie().title">{{ movie().title }}</h3>
+  </div>
+</a>
