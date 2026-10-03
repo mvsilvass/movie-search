@@ -18,11 +18,11 @@ import java.util.UUID;
 public class Movie {
 
     @Id
-    @JsonIgnore
     @Column(name = "movie_id")
     @Setter(AccessLevel.NONE)
     private UUID movieId;
 
+    @Column(name = "tmdb_id", nullable = false, unique = true)
     private Long tmdbId;
     private String title;
     private String posterPath;
