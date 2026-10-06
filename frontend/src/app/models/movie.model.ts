@@ -1,13 +1,13 @@
 import { Genre } from './genre.model';
 import { Keyword } from './keyword.model';
 
-export interface MovieCard {
+export interface MovieSummary {
   tmdbId: number;
   title: string;
   posterPath: string;
 }
 
-export interface MovieDetails {
+export interface Movie {
   tmdbId: number;
   title: string;
   posterPath: string | null;

@@ -30,7 +30,13 @@ export class HomePage {
   }
 
   onSearch(query: string) {
-    this.movieService.searchMovies(query).subscribe();
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { page: 0 },
+      queryParamsHandling: 'merge',
+    });
+
+    this.movieService.searchMovies(query, 0).subscribe();
   }
 
   viewDetails(tmdbId: number) {

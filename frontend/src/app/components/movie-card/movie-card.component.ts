@@ -1,5 +1,5 @@
 import { Component, input, output } from '@angular/core';
-import { MovieCard } from '../../models/movie.model';
+import { MovieSummary } from '../../models/movie.model';
 
 @Component({
   standalone: true,
@@ -8,7 +8,7 @@ import { MovieCard } from '../../models/movie.model';
   styleUrl: './movie-card.component.css',
 })
 export class MovieCardComponent {
-  movie = input.required<MovieCard>();
+  movie = input.required<MovieSummary>();
   clicked = output<number>();
 
   onClick() {
