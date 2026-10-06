@@ -25,10 +25,9 @@ public class MovieEmbeddingWriter implements ItemWriter<Movie> {
     @Override
     public void write(Chunk<? extends Movie> chunk) {
         List<Document> documents = new ArrayList<>();
+        movieRepository.saveAll(chunk.getItems());
 
         for (Movie movie : chunk) {
-
-            movieRepository.save(movie);
 
             Map<String, Object> metadata = Map.of(
                     "movieId", movie.getMovieId(),
@@ -37,9 +36,17 @@ public class MovieEmbeddingWriter implements ItemWriter<Movie> {
                     "keywords", movie.getKeywords()
             );
 
+            String content = String.format(
+                    "Title: %s. Genres: %s. Keywords: %s. Overview: %s",
+                    movie.getTitle(),
+                    movie.getGenres(),
+                    movie.getKeywords(),
+                    movie.getOverview()
+            );
+
             Document document = new Document(
                     String.valueOf(movie.getMovieId()),
-                    movie.getOverview(),
+                    content,
                     metadata
             );
 
