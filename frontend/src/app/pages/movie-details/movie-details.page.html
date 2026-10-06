@@ -1,0 +1,62 @@
+<div class="movie_details-container">
+  <header class="movie_details-header">
+    <span class="material-symbols-outlined" (click)="goBack()"> arrow_back_ios </span>
+  </header>
+
+  <main class="movie_details-main">
+    @if (movieDetails(); as movie) {
+      <section class="movie_details-card">
+        <figure class="movie_details-poster">
+          <img [src]="movie.posterPath" [alt]="movie.title" />
+        </figure>
+
+        <div class="movie_details-content">
+          <h1 class="movie_details-title">{{ movie.title }}</h1>
+
+          <div class="movie_details-meta">
+            <span class="movie_details-date">{{ movie.releaseDate | date }} - </span>
+            <span class="movie_details-runtime">{{ movie.runtime }} min - </span>
+            <span class="movie_details-rating"
+              >{{ movie.voteAverage }} ({{ movie.voteCount }} votos) -
+            </span>
+            <span class="movie_details-popularity">Popularidade: {{ movie.popularity }}</span>
+          </div>
+
+          <p class="movie_details-overview"><strong>Sinopse:</strong> {{ movie.overview }}</p>
+
+          @if (movie.genres && movie.genres.length > 0) {
+            <div class="movie_details-genres">
+              <strong>Gêneros:</strong>
+              <div class="movie_details-tags">
+                @for (genre of movie.genres; track genre) {
+                  <span class="movie_details-tag">{{ genre.toString() }}</span>
+                }
+              </div>
+            </div>
+          }
+
+          @if (movie.keywords && movie.keywords.length > 0) {
+            <div class="movie_details-keyword">
+              <strong>Palavras-chave:</strong>
+              <div class="movie_details-tags">
+                @for (keyword of movie.keywords; track $index) {
+                  <span class="movie_details-tag movie_details-tag--keyword">{{
+                    keyword.toString() | titlecase
+                  }}</span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    } @else {
+      <div class="movie_details-error">
+        <p>Não foi possível alcançar.</p>
+      </div>
+    }
+  </main>
+
+  <footer class="movie_details-footer">
+    <p>&copy; 2026 Movie Search. Todos os direitos reservados.</p>
+  </footer>
+</div>
