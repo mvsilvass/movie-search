@@ -1,9 +1,9 @@
-import { Component, inject, computed } from '@angular/core';
-import { MovieService } from '../../services/movie-service';
+import { Component, inject, signal } from '@angular/core';
 
 import { MovieCardComponent } from '../../components/movie-card/movie-card.component';
 
 import { SearchBarComponent } from '../../components/search-bar/search-bar.component';
+import { MovieService } from '../../services/movie-service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -18,9 +18,10 @@ export class HomePage {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
-  movies = this.movieService.movies;
   currentPage = this.movieService.currentPage;
   totalPages = this.movieService.totalPages;
+  movies = this.movieService.movies;
+  isSearching = signal(false);
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
@@ -30,13 +31,17 @@ export class HomePage {
   }
 
   onSearch(query: string) {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { page: 0 },
-      queryParamsHandling: 'merge',
-    });
+    this.route.queryParams.subscribe((params) => {
+      const page = params['page'] ? Number(params['page']) : 0;
 
-    this.movieService.searchMovies(query, 0).subscribe();
+      if (query && query.trim() !== '') {
+        this.movieService.searchMovies(query).subscribe();
+        this.isSearching.set(true);
+      } else {
+        this.movieService.getTopRatedMovies(page).subscribe();
+        this.isSearching.set(false);
+      }
+    });
   }
 
   viewDetails(tmdbId: number) {
@@ -53,7 +58,6 @@ export class HomePage {
     });
 
     this.movieService.getTopRatedMovies(page).subscribe();
-    console.log('Current Page:', this.currentPage());
   }
 
   previousPage(event: Event) {
